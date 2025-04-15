@@ -1,0 +1,15 @@
+{% extends "main_page.html" %}
+{% block data %}
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <div>Укажите количество шагов в рецепте <p>
+        {{ form.count(class="form-control") }}<br>
+        {% for error in form.count.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p></div>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+</form>
+{% endblock %}

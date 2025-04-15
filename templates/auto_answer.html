@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<ul>
+{% for prof in values %}
+<h3>{{prof}} {{values[prof]}}</h3>
+{% endfor %}
+</ul>
+{% endblock %}

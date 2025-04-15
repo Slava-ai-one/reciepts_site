@@ -1,0 +1,11 @@
+{% extends "main_page.html" %}
+
+{% block data %}
+
+{% block content %}
+<div id="user_field">{{ name }}  {{ email }}</div>
+{% endblock %}
+        <div id="search_field"></div>
+        <div id="functional_field"><a href={{acc}}>Аккаунт</a><a href={{cre}}>Создать рецепт</a></div>
+        <div id="popular_recepts"></div>
+{% endblock %}

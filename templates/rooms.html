@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="rooms"><div id="higl"><h2>Размещение по каютам</h2></div>
+{% for human in values %}
+{% set room_number = loop.index %}
+<h5>{{human}} - Каюта № {{room_number}} {% if loop.first %} - капитан корабля {% endif %}</h5>
+    {% endfor %}
+</div>
+{% endblock %}

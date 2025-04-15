@@ -1,0 +1,10 @@
+{% extends "main_page.html" %}
+{% block data %}
+<form method="post">
+    {% for c in count %}
+    <textarea class="form-control" name='step' rows="5" id="base_field"></textarea>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Готово</button>
+</form>
+
+{% endblock %}
