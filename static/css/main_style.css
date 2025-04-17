@@ -8,3 +8,37 @@ body {background-color: rgb(255, 194, 28);}
 #login_link {margin-left: 150px; margin-top: -35px}
 #base_field {margin-left: 475px; margin-top: 20px; background-color: rgb(255, 255, 255); width: 900px}
 #data_field {width: 900px}
+#standart_recept{display: none}
+#standart:checked ~ #standart_recept{display: inline} ~ #steps_recept{display: none}
+#steps_recept{display: none}
+#steps:checked ~ #steps_recept{display: inline} ~ #standart_recept{display: none}
+#recept_text {width: 350px; display: block; height: 400px}
+#1 {display: none}
+#add_button2 {display: none}
+#add_button3 {display: none}
+#add_button4 {display: none}
+#add_button5 {display: none}
+#add_button6 {display: none}
+#add_button7 {display: none}
+#add_button8 {display: none}
+#add_button9 {display: none}
+#add_button10 {display: none}
+#2 {display: none}
+#3 {display: none}
+#4 {display: none}
+#5 {display: none}
+#6 {display: none}
+#7 {display: none}
+#8 {display: none}
+#9 {display: none}
+#10 {display: none}
+#add_button1:clicked ~ #1 {display: inline} ~ #add_button1 {display: none}
+#add_button1:clicked ~ #2 {display: inline} ~ #add_button2 {display: none}
+#add_button1:clicked ~ #3 {display: inline} ~ #add_button3 {display: none}
+#add_button1:clicked ~ #4 {display: inline} ~ #add_button4 {display: none}
+#add_button1:clicked ~ #5 {display: inline} ~ #add_button5 {display: none}
+#add_button1:clicked ~ #6 {display: inline} ~ #add_button6 {display: none}
+#add_button1:clicked ~ #7 {display: inline} ~ #add_button7 {display: none}
+#add_button1:clicked ~ #8 {display: inline} ~ #add_button8 {display: none}
+#add_button1:clicked ~ #9 {display: inline} ~ #add_button9 {display: none}
+#add_button1:clicked ~ #10 {display: inline} ~ #add_button10 {display: none}

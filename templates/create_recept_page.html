@@ -1,10 +1,42 @@
 {% extends "main_page.html" %}
 {% block data %}
 <form method="post">
-    {% for c in count %}
-    <textarea class="form-control" name='step' rows="5" id="base_field"></textarea>
-    {% endfor %}
+    {% set curr_count = count %}
+    <h2>Введите название рецепта</h2>
+    <input type="text"><br>
+    <h2>Введите описание блюда</h2>
+    <input type="text"><br>
+    <input type="radio" value="standart" id="standart" name="asd" checked><label for="standart">Рецепт одним
+    текстом</label><br>
+    <input type="radio" value="steps" name="asd" id="steps"><label for="steps">Пошаговый рецепт с фото</label><br>
+    <div id="standart_recept"><textarea id="recept_text"></textarea></div>
+    <div id="steps_recept">
+        <button type="button" class="btn btn-primary" id="add_button1">Добавить шаг</button>
+        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]" id=1>
+        <button type="button" class="btn btn-primary" id="add_button2">Добавить шаг</button>
+        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]" id=2>
+        <button type="button" class="btn btn-primary" id="add_button3">Добавить шаг</button>
+        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]" id=3>
+        <button type="button" class="btn btn-primary" id="add_button4">Добавить шаг</button>
+        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]" id=4>
+        <button type="button" class="btn btn-primary" id="add_button5">Добавить шаг</button>
+        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]" id=5>
+        <button type="button" class="btn btn-primary" id="add_button6">Добавить шаг</button>
+        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]" id=6>
+        <button type="button" class="btn btn-primary" id="add_button7">Добавить шаг</button>
+        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]" id=7>
+        <button type="button" class="btn btn-primary" id="add_button8">Добавить шаг</button>
+        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]" id=8>
+        <button type="button" class="btn btn-primary" id="add_button9">Добавить шаг</button>
+        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]" id=9>
+        <button type="button" class="btn btn-primary" id="add_button10">Добавить шаг</button>
+        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]" id=10>
+    </div>
+    <h2>Напишите категории к которым относится рецепт</h2>
+    <input type="text"><br>
+    <br>
     <button type="submit" class="btn btn-primary">Готово</button>
 </form>
 
 {% endblock %}
+<input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]">

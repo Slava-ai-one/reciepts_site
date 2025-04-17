@@ -6,6 +6,7 @@ from data.registration_recepts import RegistrationForm
 from data import db_recepts_session
 from data import users_table_recepts
 from data import create_recepts
+from data import recept_table
 
 db_recepts_session.global_init("db/blogs.db")
 app = Flask(__name__)
@@ -30,25 +31,26 @@ def account(data):
                                message=f'Кажется, вы не в аккаунте.')
 
 
-@app.route('/chose_count/<data>', methods=['POST', 'GET'])
-def chose_count(data):
-    form = create_recepts.CreationForm()
-    key = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c',
-           'v', 'b', 'n', 'm', ',', '.', ';', '[', ']', '{', '}']
-    if form.validate_on_submit():
-        count = []
-        for _ in range(int(form.count.data)):
-            count.append(key[randint(0, len(key))])
-        return redirect(f'/create_recept/{''.join(count)}')
-    return render_template('chose_count.html', title='Выбор количества шагов', form=form)
+#@app.route('/chose_count/<data>', methods=['POST', 'GET'])
+#def chose_count(data):
+#    form = create_recepts.CreationForm()
+#    key = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c',
+#           'v', 'b', 'n', 'm', ',', '.', ';', '[', ']', '{', '}']
+#    if form.validate_on_submit():
+#        count = []
+#        for _ in range(int(form.count.data)):
+#            count.append(key[randint(0, len(key))])
+#        return redirect(f'/create_recept/{''.join(count)}')
+#    return render_template('chose_count.html', title='Выбор количества шагов', form=form)
 
 
 @app.route('/create_recept/<data>', methods=['POST', 'GET'])
 def create_recept(data):
+    count = len(db_recepts_session.create_session().query(recept_table.Recepts.id).all())
     if request.method == 'GET':
-        return render_template('create_recept_page.html', title='Создание рецепта', count=data)
+        return render_template('create_recept_page.html', title='Создание рецепта', count=count)
     elif request.method == 'POST':
-        rec = request.form.get('step')
+        rec = request.form.get('asd')
         print(rec)
 
 
@@ -56,8 +58,9 @@ def create_recept(data):
 def main_autorized(data):
     user = db_recepts_session.create_session().query(users_table_recepts.User).filter(
         users_table_recepts.User.name == data).first()
+    name = '%20'.join(user.name.split())
     return render_template('main_page_autorization.html', title='Главная страница', name=user.name,
-                           email=user.email, acc=f"/account/{user.name}", cre=f"/chose_count/{user.name}")
+                           email=user.email, acc=f"/account/{name}", cre=f"/create_recept/{name}")
 
 
 @app.route('/login', methods=['GET', 'POST'])
