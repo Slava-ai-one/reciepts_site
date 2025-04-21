@@ -12,17 +12,15 @@ body {background-color: rgb(255, 194, 28);}
 #standart:checked ~ #standart_recept{display: inline} ~ #steps_recept{display: none}
 #steps_recept{display: none}
 #steps:checked ~ #steps_recept{display: inline} ~ #standart_recept{display: none}
+#recept_form {background-color: rgb(255, 194, 28);
+    border-width: 10px;
+    border: solid;
+    width: 450px;}
+#name_recept {margin-left-auto:}
+#body_of_recept {margin-left: 100px}
 #recept_text {width: 350px; display: block; height: 400px}
 #1 {display: none}
-#add_button2 {display: none}
-#add_button3 {display: none}
-#add_button4 {display: none}
-#add_button5 {display: none}
-#add_button6 {display: none}
-#add_button7 {display: none}
-#add_button8 {display: none}
-#add_button9 {display: none}
-#add_button10 {display: none}
+visually_hiden {position: absolute; left: -100vw}
 #2 {display: none}
 #3 {display: none}
 #4 {display: none}
@@ -32,13 +30,13 @@ body {background-color: rgb(255, 194, 28);}
 #8 {display: none}
 #9 {display: none}
 #10 {display: none}
-#add_button1:clicked ~ #1 {display: inline} ~ #add_button1 {display: none}
-#add_button1:clicked ~ #2 {display: inline} ~ #add_button2 {display: none}
-#add_button1:clicked ~ #3 {display: inline} ~ #add_button3 {display: none}
-#add_button1:clicked ~ #4 {display: inline} ~ #add_button4 {display: none}
-#add_button1:clicked ~ #5 {display: inline} ~ #add_button5 {display: none}
-#add_button1:clicked ~ #6 {display: inline} ~ #add_button6 {display: none}
-#add_button1:clicked ~ #7 {display: inline} ~ #add_button7 {display: none}
-#add_button1:clicked ~ #8 {display: inline} ~ #add_button8 {display: none}
-#add_button1:clicked ~ #9 {display: inline} ~ #add_button9 {display: none}
-#add_button1:clicked ~ #10 {display: inline} ~ #add_button10 {display: none}
+#add_button1:checked ~ #1 {display: inline}
+#add_button2:checked ~ #2 {display: inline}
+#add_button3:checked ~ #3 {display: inline}
+#add_button4:checked ~ #4 {display: inline}
+#add_button5:checked ~ #5 {display: inline}
+#add_button6:checked ~ #6 {display: inline}
+#add_button7:checked ~ #7 {display: inline}
+#add_button8:checked ~ #8 {display: inline}
+#add_button9:checked ~ #9 {display: inline}
+#add_button10:checked ~ #10 {display: inline}

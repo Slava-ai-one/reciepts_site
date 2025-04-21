@@ -2,18 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-        <title>{{title}}</title>
+    <title>{{title}}</title>
     <link rel="stylesheet" type="text/css" href="/static/css/main_style.css">
-    </head>
-    <body>
-    {% block data %}
-    {% block content %}
-        <div id="user_field"><a href="/login">Войти</a> <a href="/registration">Зарегистрироваться</a></div>
-    <p>{{ message }}</p>
-    {% endblock %}
-        <div id="search_field"></div>
-        <div id="functional_field"><a href="/account/">Аккаунт</a><a href="/chose_count/">Создать рецепт</a></div>
-        <div id="popular_recepts"></div>
-    {% endblock %}
-    </body>
+</head>
+<body>
+{% block data %}
+{% block content %}
+<div id="user_field"><a href="/login">Войти</a> <a href="/registration">Зарегистрироваться</a></div>
+<p>{{ message }}</p>
+{% endblock %}
+<div id="search_field"></div>
+<div id="functional_field"><a href="/account/">Аккаунт</a><a href="/chose_count/">Создать рецепт</a></div>
+<div id="popular_recepts">
+    <div id="recept_form">
+        <div id="name_recept">name of recept</div>
+        <br><br>
+        <div id="body_of_recept">body of recept<br> bla bla bla bla bla bla bla bla</div>
+        <br><br><br><br>
+        <div id="tags"></div>
+    </div>
+</div>
+{% endblock %}
+</body>
 </html>

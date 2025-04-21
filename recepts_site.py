@@ -50,8 +50,20 @@ def create_recept(data):
     if request.method == 'GET':
         return render_template('create_recept_page.html', title='Создание рецепта', count=count)
     elif request.method == 'POST':
-        rec = request.form.get('asd')
+        rec = [request.form.get(f"name_recept{count}"), request.form.get(f"description_recept{count}"),
+               request.form.get(f"recept{count}"), request.form.get(f"categories{count}")]
         print(rec)
+        recept = recept_table.Recepts()
+        recept.title = rec[0]
+        recept.discription = rec[1]
+        recept.content = rec[2]
+        recept.category_tags = rec[3]
+        recept.user_id = db_recepts_session.create_session().query(users_table_recepts.User.id).filter(
+            users_table_recepts.User.name == data).first()[0]
+
+        db_sess = db_recepts_session.create_session()
+        db_sess.add(recept)
+        db_sess.commit()
 
 
 @app.route('/autorizated_main_page/<data>')
