@@ -8,17 +8,21 @@ body {background-color: rgb(255, 194, 28);}
 #login_link {margin-left: 150px; margin-top: -35px}
 #base_field {margin-left: 475px; margin-top: 20px; background-color: rgb(255, 255, 255); width: 900px}
 #data_field {width: 900px}
+#table_recepts {border-collapse: collapse; border-spacing 0px; border: 0px}
+.th {padding: 0px}
 #standart_recept{display: none}
 #standart:checked ~ #standart_recept{display: inline} ~ #steps_recept{display: none}
 #steps_recept{display: none}
+#recept_global {margin-left: 30%; margin-right: 30%; background-color: rgb(255, 255, 255)}
 #steps:checked ~ #steps_recept{display: inline} ~ #standart_recept{display: none}
-#recept_form {background-color: rgb(255, 194, 28);
+.recept_form {background-color: rgb(255, 194, 28);
     border-width: 10px;
     border: solid;
-    width: 450px;}
+    width: 493.5px;
+    height: 792px;}
 #name_recept {margin-left-auto:}
 #body_of_recept {margin-left: 100px}
-#recept_text {width: 350px; display: block; height: 400px}
+#recept_text {width: 350px; display: block; height: 400px; resize: none}
 #1 {display: none}
 visually_hiden {position: absolute; left: -100vw}
 #2 {display: none}

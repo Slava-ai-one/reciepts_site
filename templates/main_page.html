@@ -14,13 +14,19 @@
 <div id="search_field"></div>
 <div id="functional_field"><a href="/account/">Аккаунт</a><a href="/chose_count/">Создать рецепт</a></div>
 <div id="popular_recepts">
-    <div id="recept_form">
-        <div id="name_recept">name of recept</div>
+    <table id="table_recepts"><tr>
+    {% for x in rec %}
+        <th scope="col">
+    <div class="recept_form">
+        <div id="name_recept"><a href="/recept_page/{{ x.id }}">{{ x.title }}</a></div>
         <br><br>
-        <div id="body_of_recept">body of recept<br> bla bla bla bla bla bla bla bla</div>
+        <div id="body_of_recept">{{ x.discription }}<br> {{ x.content }}</div>
         <br><br><br><br>
-        <div id="tags"></div>
-    </div>
+        <div id="tags"> {{ x.category_tags }}</div>
+    </div></th>
+    {% endfor %}
+        </tr>
+        </table>
 </div>
 {% endblock %}
 </body>

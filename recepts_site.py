@@ -15,7 +15,24 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 @app.route('/')
 def main():
-    return render_template('main_page.html', title='Главная страница')
+    res = []
+    for _ in range(3):
+        x = randint(1, len(db_recepts_session.create_session().query(recept_table.Recepts.id).all()))
+        ans = db_recepts_session.create_session().query(recept_table.Recepts).filter(recept_table.Recepts.id == x).first()
+        with open(f"{ans.content}", mode='r') as f:
+            b = f.readlines()
+            ans.content = ''.join(b)
+        res.append(ans)
+    print(res)
+    return render_template('main_page.html', title='Главная страница', rec=res)
+
+@app.route('/recept_page/<data>')
+def recept_page(data):
+    ans = db_recepts_session.create_session().query(recept_table.Recepts).filter(recept_table.Recepts.id == data).first()
+    with open(f"{ans.content}", mode='r') as f:
+        b = f.readlines()
+        ans.content = ''.join(b)
+    return render_template('recept_page.html', title=ans.title, rec=ans)
 
 
 @app.route('/account/<data>')
@@ -46,7 +63,7 @@ def account(data):
 
 @app.route('/create_recept/<data>', methods=['POST', 'GET'])
 def create_recept(data):
-    count = len(db_recepts_session.create_session().query(recept_table.Recepts.id).all())
+    count = len(db_recepts_session.create_session().query(recept_table.Recepts.id).all()) + 1
     if request.method == 'GET':
         return render_template('create_recept_page.html', title='Создание рецепта', count=count)
     elif request.method == 'POST':
@@ -56,14 +73,18 @@ def create_recept(data):
         recept = recept_table.Recepts()
         recept.title = rec[0]
         recept.discription = rec[1]
-        recept.content = rec[2]
         recept.category_tags = rec[3]
         recept.user_id = db_recepts_session.create_session().query(users_table_recepts.User.id).filter(
             users_table_recepts.User.name == data).first()[0]
+        with open(f'static/text_files/text_recept_{count}', mode='w') as f:
+            f.write('\n'.join(rec[2].split('\r\n')))
+        recept.content = f'static/text_files/text_recept_{count}'
 
         db_sess = db_recepts_session.create_session()
         db_sess.add(recept)
         db_sess.commit()
+
+        return redirect(location=f"/autorizated_main_page/{data}")
 
 
 @app.route('/autorizated_main_page/<data>')

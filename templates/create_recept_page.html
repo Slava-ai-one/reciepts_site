@@ -9,7 +9,7 @@
     <input type="radio" value="standart" id="standart" name="asd" checked><label for="standart">Рецепт одним
     текстом</label><br>
     <input type="radio" value="steps" name="asd" id="steps"><label for="steps">Пошаговый рецепт с фото</label><br>
-    <div id="standart_recept"><textarea id="recept_text" name=recept{{curr_count}}></textarea></div>
+    <div id="standart_recept"><textarea id="recept_text" name=recept{{curr_count}} wrap="hard" onresize="F"></textarea></div>
     <div id="steps_recept">
         <input type="radio" value="1" class="visually_hiden" id="add_button1"><label for="add_button1">Добавить шаг</label>
         <div id="1">
@@ -53,7 +53,7 @@
             </div>
     </div>
     <h2>Напишите категории к которым относится рецепт</h2>
-    <input type="text" name=categories{{curr_count}}><br>
+    <input type="text" name=categories{{curr_count}} required><br>
     <br>
     <button type="submit" class="btn btn-primary">Готово</button>
 </form>

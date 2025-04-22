@@ -1,0 +1,9 @@
+{% extends "main_page.html" %}
+
+{% block data %}
+<div id="recept_global">
+<h1>{{ rec.title }}</h1>
+<h5>{{ rec.category_tags }}</h5><br><br>
+<h2>{{ rec.discription }}</h2><br>
+<div>{{ rec.content }}</div></div>
+{% endblock %}
