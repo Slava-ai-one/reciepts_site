@@ -1,9 +1,11 @@
 {% extends "main_page.html" %}
 {% block data %}
-<form method="post">
+<form method="post" enctype=multipart/form-data>
     {% set curr_count = count %}
     <h2>Введите название рецепта</h2>
     <input type="text" name=name_recept{{curr_count}}><br>
+    <h2>Прикрепите файл с фотографией готового блюда</h2>
+    <input type=file name=file required><br>
     <h2>Введите описание блюда</h2>
     <input type="text" name=description_recept{{curr_count}}><br>
     <input type="radio" value="standart" id="standart" name="asd" checked><label for="standart">Рецепт одним
@@ -53,7 +55,14 @@
             </div>
     </div>
     <h2>Напишите категории к которым относится рецепт</h2>
-    <input type="text" name=categories{{curr_count}} required><br>
+    <lable for="soup">Суп</lable>
+    <input type="checkbox" name=soup value="Суп"><br>
+    <lable for="desert">Дессерт</lable>
+    <input type="checkbox" name=desert value="Дессерт"><br>
+    <lable for="tea">чай</lable>
+    <input type="checkbox" name=tea value="чай"><br>
+    <lable for="garnir">Гарнир</lable>
+    <input type="checkbox" name=garnir value="Гарнир"><br>
     <br>
     <button type="submit" class="btn btn-primary">Готово</button>
 </form>

@@ -19,10 +19,42 @@ body {background-color: rgb(255, 194, 28);}
     border-width: 10px;
     border: solid;
     width: 493.5px;
-    height: 792px;}
+    height: 792px;
+    }
 #name_recept {margin-left-auto:}
-#body_of_recept {margin-left: 100px}
+#body_of_recept {margin-left: 10%; margin-right: 10%}
 #recept_text {width: 350px; display: block; height: 400px; resize: none}
+.account_recept_form {background-color: rgb(255, 194, 28);
+    border-width: 10px;
+    border: solid;
+    width: 900px;
+    height: 792px;
+    text-align: center}
+a:visited {color: #204a00}
+a:hover {font-size: 90%; color:#ff6600}
+a:-webkit-any-link {
+    cursor: pointer;
+}
+#name_recept {
+    text-align: center;
+}
+#tags {
+    margin-left: 10%;
+    text-align: left;
+}
+.to_be_continued {
+    text-wrap-mode: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+a {color: #204a00; text-decoration: none;}
+.big_text {color: rgb(0, 0, 0);
+    overflow: hidden;
+    text-overflow: ellipsis; overflow-wrap: anywhere; display: -webkit-box;
+  -webkit-line-clamp: 21;
+  -webkit-box-orient: vertical;
+  overflow: hidden;}
+.hero_image {width: 80%; margin-left: 10%; margin-right: 10%; max-height: 40%}
 #1 {display: none}
 visually_hiden {position: absolute; left: -100vw}
 #2 {display: none}

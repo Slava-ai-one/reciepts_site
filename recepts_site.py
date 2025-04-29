@@ -1,6 +1,10 @@
-from flask import Flask, url_for, request, render_template, redirect
+from flask import Flask, url_for, request, render_template, redirect, url_for, flash
 from random import randint
+import os
 import json
+
+from unicodedata import category
+
 from data.login_recepts import LoginForm
 from data.registration_recepts import RegistrationForm
 from data import db_recepts_session
@@ -11,20 +15,24 @@ from data import recept_table
 db_recepts_session.global_init("db/blogs.db")
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+app.config["Upload_folder"] = "static/img"
 
 
 @app.route('/')
 def main():
     res = []
-    for _ in range(3):
-        x = randint(1, len(db_recepts_session.create_session().query(recept_table.Recepts.id).all()))
-        ans = db_recepts_session.create_session().query(recept_table.Recepts).filter(recept_table.Recepts.id == x).first()
-        with open(f"{ans.content}", mode='r') as f:
-            b = f.readlines()
-            ans.content = ''.join(b)
-        res.append(ans)
-    print(res)
-    return render_template('main_page.html', title='Главная страница', rec=res)
+    if len(db_recepts_session.create_session().query(recept_table.Recepts.id).all()) != 0:
+        for _ in range(3):
+            x = randint(1, len(db_recepts_session.create_session().query(recept_table.Recepts.id).all()))
+            ans = db_recepts_session.create_session().query(recept_table.Recepts).filter(recept_table.Recepts.id == x).first()
+            with open(f"{ans.content}", mode='r') as f:
+                b = f.readlines()
+                ans.content = ''.join(b)
+            res.append(ans)
+        print(res)
+        return render_template('main_page.html', title='Главная страница', rec=res)
+    else:
+        return render_template('main_page.html', title='Главная страница')
 
 @app.route('/recept_page/<data>')
 def recept_page(data):
@@ -42,7 +50,14 @@ def account(data):
             users_table_recepts.User.name == data).first()
         if not user:
             raise SyntaxError
-        return render_template('account_page.html', title='Аккаунт')
+        res = []
+        for ans in user.recepts:
+            with open(f"{ans.content}", mode='r') as f:
+                b = f.readlines()
+                ans.content = ''.join(b)
+            res.append(ans)
+        print([x.id for x in user.recepts])
+        return render_template('account_page.html', title='Аккаунт', rec=res)
     except Exception:
         return render_template('main_page.html', title='Главная страница',
                                message=f'Кажется, вы не в аккаунте.')
@@ -67,12 +82,36 @@ def create_recept(data):
     if request.method == 'GET':
         return render_template('create_recept_page.html', title='Создание рецепта', count=count)
     elif request.method == 'POST':
+        tags = ['soup', 'desert', 'tea', 'garnir']
+        category = None
+        for tag in tags:
+            req = request.form.get(f"{tag}")
+            if req:
+                if category:
+                    category = ', '.join([category[1:], req])
+                else:
+                    category = req
+        print(category)
         rec = [request.form.get(f"name_recept{count}"), request.form.get(f"description_recept{count}"),
-               request.form.get(f"recept{count}"), request.form.get(f"categories{count}")]
+               request.form.get(f"recept{count}"), category]
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # If the user does not select a file, the browser submits an
+        # empty file without a filename.
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file:
+            filename = f"hero_file{count}.png"
+            file.save(os.path.join(app.config['Upload_folder'], filename))
         print(rec)
         recept = recept_table.Recepts()
         recept.title = rec[0]
         recept.discription = rec[1]
+        recept.way_to_image = f"/static/img/hero_file{count}.png"
         recept.category_tags = rec[3]
         recept.user_id = db_recepts_session.create_session().query(users_table_recepts.User.id).filter(
             users_table_recepts.User.name == data).first()[0]
@@ -83,17 +122,32 @@ def create_recept(data):
         db_sess = db_recepts_session.create_session()
         db_sess.add(recept)
         db_sess.commit()
-
         return redirect(location=f"/autorizated_main_page/{data}")
 
 
 @app.route('/autorizated_main_page/<data>')
 def main_autorized(data):
-    user = db_recepts_session.create_session().query(users_table_recepts.User).filter(
-        users_table_recepts.User.name == data).first()
-    name = '%20'.join(user.name.split())
-    return render_template('main_page_autorization.html', title='Главная страница', name=user.name,
-                           email=user.email, acc=f"/account/{name}", cre=f"/create_recept/{name}")
+    res = []
+    if len(db_recepts_session.create_session().query(recept_table.Recepts.id).all()) != 0:
+        for _ in range(3):
+            x = randint(1, len(db_recepts_session.create_session().query(recept_table.Recepts.id).all()))
+            ans = db_recepts_session.create_session().query(recept_table.Recepts).filter(
+                recept_table.Recepts.id == x).first()
+            with open(f"{ans.content}", mode='r') as f:
+                b = f.readlines()
+                ans.content = ''.join(b)
+            res.append(ans)
+        user = db_recepts_session.create_session().query(users_table_recepts.User).filter(
+            users_table_recepts.User.name == data).first()
+        name = '%20'.join(user.name.split())
+        return render_template('main_page_autorization.html', title='Главная страница', name=user.name,
+                           email=user.email, acc=f"/account/{name}", cre=f"/create_recept/{name}", rec=res)
+    else:
+        user = db_recepts_session.create_session().query(users_table_recepts.User).filter(
+            users_table_recepts.User.name == data).first()
+        name = '%20'.join(user.name.split())
+        return render_template('main_page_autorization.html', title='Главная страница', name=user.name,
+                               email=user.email, acc=f"/account/{name}", cre=f"/create_recept/{name}")
 
 
 @app.route('/login', methods=['GET', 'POST'])

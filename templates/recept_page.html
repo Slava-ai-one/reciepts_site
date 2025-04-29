@@ -2,8 +2,12 @@
 
 {% block data %}
 <div id="recept_global">
-<h1>{{ rec.title }}</h1>
-<h5>{{ rec.category_tags }}</h5><br><br>
-<h2>{{ rec.discription }}</h2><br>
-<div>{{ rec.content }}</div></div>
+    <div class="big_text">
+<h1>{{ rec.title }}</h1></div>
+    <br>
+    <img src='{{ rec.way_to_image }}' class="hero_image">
+        <br>
+ <div class="big_text"><h5>{{ rec.category_tags }}</h5></div><br><br>
+ <div class="big_text"><h2>{{ rec.discription }}</h2></div><br>
+    <div style="-webkit-line-clamp: 2; text-overflow: ellipsis;">{{ rec.content }}</div></div>
 {% endblock %}

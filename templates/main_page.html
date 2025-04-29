@@ -17,13 +17,16 @@
     <table id="table_recepts"><tr>
     {% for x in rec %}
         <th scope="col">
+            <a href="/recept_page/{{ x.id }}">
     <div class="recept_form">
-        <div id="name_recept"><a href="/recept_page/{{ x.id }}">{{ x.title }}</a></div>
+        <div id="name_recept" class="big_text">{{ x.title }}</div>
         <br><br>
-        <div id="body_of_recept">{{ x.discription }}<br> {{ x.content }}</div>
-        <br><br><br><br>
-        <div id="tags"> {{ x.category_tags }}</div>
-    </div></th>
+        <img src="static/img/hero_file{{ x.id }}.png" class="hero_image">
+        <br>
+        <div id="body_of_recept" class="big_text">{{ x.discription }}<br><br> {{ x.content }}</div>
+        <br><br>
+        <div id="tags" class="big_text"> {{ x.category_tags }}</div>
+    </div></a></th>
     {% endfor %}
         </tr>
         </table>

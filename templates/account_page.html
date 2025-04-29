@@ -1,6 +1,16 @@
 {% extends "main_page.html" %}
 {% block data %}
 <div id="base_field">
-
+{% for x in rec %}
+            <a href="/recept_page/{{ x.id }}">
+    <div class="account_recept_form">
+        <div id="name_recept" class="big_text">{{ x.title }}</div>
+        <img src="/static/img/hero_file{{ x.id }}.png" class="hero_image">
+        <br>
+        <div id="body_of_recept" class="big_text"><div class="to_be_continued">{{ x.discription }}</div><br> {{ x.content }}</div>
+        <br><br>
+        <div id="tags" class="big_text"><div class="to_be_continued"> {{ x.category_tags }}</div></div>
+    </div></a>
+    {% endfor %}
 </div>
 {% endblock %}
