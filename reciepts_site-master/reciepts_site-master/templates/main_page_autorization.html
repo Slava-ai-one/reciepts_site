@@ -1,0 +1,25 @@
+{% extends "main_page.html" %}
+
+{% block data %}
+
+{% block content %}
+<div id="user_field">{{ name }}  {{ email }}</div>
+{% endblock %}
+        <div id="search_field"></div>
+        <div id="functional_field"><a href={{acc}}>Аккаунт</a><a href={{cre}}>Создать рецепт</a></div>
+        <div id="popular_recepts"><table id="table_recepts"><tr>
+    {% for x in rec %}
+        <th scope="col">
+    <div class="recept_form">
+        <div id="name_recept" class="big_text"><a href="/recept_page/{{ x.id }}">{{ x.title }}</a></div>
+        <br><br>
+        <img src="/static/img/hero_file{{ x.id }}.png" class="hero_image">
+        <br>
+        <div id="body_of_recept" class="big_text">{{ x.discription }}<br> {{ x.content }}</div>
+        <br><br><br><br>
+        <div id="tags" class="big_text"> {{ x.category_tags }}</div>
+    </div></th>
+    {% endfor %}
+        </tr>
+        </table></div>
+{% endblock %}

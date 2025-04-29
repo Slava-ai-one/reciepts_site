@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/main_style.css">
+</head>
+<body>
+{% block data %}
+{% block content %}
+<div id="user_field"><a href="/login">Войти</a> <a href="/registration">Зарегистрироваться</a></div>
+<p>{{ message }}</p>
+{% endblock %}
+<div id="search_field"></div>
+<div id="functional_field"><a href="/account/">Аккаунт</a><a href="/chose_count/">Создать рецепт</a></div>
+<div id="popular_recepts">
+    <table id="table_recepts"><tr>
+    {% for x in rec %}
+        <th scope="col">
+    <div class="recept_form">
+        <div id="name_recept" class="big_text"><a href="/recept_page/{{ x.id }}">{{ x.title }}</a></div>
+        <br><br>
+        <img src="static/img/hero_file{{ x.id }}" class="hero_image">
+        <br>
+        <div id="body_of_recept" class="big_text">{{ x.discription }}<br> {{ x.content }}</div>
+        <br><br><br><br>
+        <div id="tags" class="big_text"> {{ x.category_tags }}</div>
+    </div></th>
+    {% endfor %}
+        </tr>
+        </table>
+</div>
+{% endblock %}
+</body>
+</html>
