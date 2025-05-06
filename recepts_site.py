@@ -17,6 +17,16 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config["Upload_folder"] = "static/img"
 
+class Del():
+    def __init__(self):
+        self.del_cnt = 0
+
+    def del_pls(self):
+        self.del_cnt += 1
+
+    def del_check(self):
+        return self.del_cnt >= 2
+
 
 @app.route('/')
 def main():
@@ -38,22 +48,24 @@ def main():
 
 @app.route('/recept_page/<data>', methods=['POST', 'GET'])
 def recept_page(data):
+    delite = Del()
+    db_sess = db_recepts_session.create_session()
     if request.method == 'GET':
         if authorized.check():
-            ans = db_recepts_session.create_session().query(recept_table.Recepts).filter(
+            ans = db_sess.query(recept_table.Recepts).filter(
                 recept_table.Recepts.id == data.split('52%')[0]).first()
             with open(f"{ans.content}", mode='r') as f:
                 b = f.readlines()
                 ans.content = ''.join(b)
             find = ' '.join(data.split('52%')[1].split('%20'))
-            bcd = db_recepts_session.create_session().query(users_table_recepts.User).filter(
+            bcd = db_sess.query(users_table_recepts.User).filter(
                 users_table_recepts.User.name == find).first()
             if ans.user_id == bcd.id or bcd.is_admin == 1:
                 return render_template('recept_page.html', title=ans.title, rec=ans, achivment=True)
             else:
                 return render_template('recept_page.html', title=ans.title, rec=ans)
         else:
-            ans = db_recepts_session.create_session().query(recept_table.Recepts).filter(
+            ans = db_sess.query(recept_table.Recepts).filter(
                 recept_table.Recepts.id == data).first()
             with open(f"{ans.content}", mode='r') as f:
                 b = f.readlines()
@@ -61,8 +73,20 @@ def recept_page(data):
             return render_template('recept_page.html', title=ans.title, rec=ans)
     elif request.method == 'POST':
         try:
-            print(request.form.get('delete'))
-            print(request.form.get('edit'))
+            ans = db_sess.query(recept_table.Recepts).filter(
+                recept_table.Recepts.id == data.split('52%')[0]).first()
+            if request.form.get('delete') == "delete":
+                delite.del_pls()
+                return render_template('recept_page.html', title=ans.title, rec=ans, achivment=True, warning=True)
+            if delite.del_check():
+                db_sess.delete(ans)
+                db_sess.commit()
+                return redirect(location=f"/autorizated_main_page/{' '.join(data.split('52%')[1].split('%20'))}")
+            if request.form.get('edit') == 'edit':
+                find = ' '.join(data.split('52%')[1].split('%20'))
+                bcd = db_sess.query(users_table_recepts.User).filter(
+                    users_table_recepts.User.name == find).first()
+                return redirect(f"/edit_recept/{bcd.name}/{ans.id}")
         except Exception:
             pass
 
@@ -82,12 +106,12 @@ def account(data):
                     ans.content = ''.join(b)
                 res.append(ans)
             print([x.id for x in user.recepts])
-            return render_template('account_page.html', title='Аккаунт', rec=res)
+            return render_template('account_page.html', title='Аккаунт', rec=res, user=user)
         except Exception:
             return render_template('main_page.html', title='Главная страница',
                                    message=f'Кажется, вы не в аккаунте.')
     else:
-        return 'YOU SHELL NOT PASSSS'
+        return redirect('/login')
 
 
 # @app.route('/chose_count/<data>', methods=['POST', 'GET'])
@@ -101,6 +125,58 @@ def account(data):
 #            count.append(key[randint(0, len(key))])
 #        return redirect(f'/create_recept/{''.join(count)}')
 #    return render_template('chose_count.html', title='Выбор количества шагов', form=form)
+
+@app.route('/edit_recept/<data>/<meta>', methods=['POST', 'GET'])
+def edit_recept(data, meta):
+    if authorized.check():
+        ans = db_recepts_session.create_session().query(recept_table.Recepts).filter(
+            recept_table.Recepts.id == meta).first()
+        count = ans.id
+        if request.method == 'GET':
+            with open(f"{ans.content}", mode='r') as f:
+                b = f.readlines()
+                ans.content = ''.join(b)
+            return render_template('edit_page.html', title='Редактирование рецепта', count=ans.id, ans=ans)
+        elif request.method == 'POST':
+            tags = ['soup', 'desert', 'tea', 'garnir']
+            category = None
+            for tag in tags:
+                req = request.form.get(f"{tag}")
+                if req:
+                    if category:
+                        category = ', '.join([category, req])
+                    else:
+                        category = req
+            print(category)
+            rec = [request.form.get(f"name_recept{count}"), request.form.get(f"description_recept{count}"),
+                   request.form.get(f"recept{count}"), category]
+            if 'file' not in request.files:
+                flash('No file part')
+                return redirect(request.url)
+            file = request.files['file']
+            if file.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+            if file:
+                filename = f"hero_file{count}.png"
+                file.save(os.path.join(app.config['Upload_folder'], filename))
+            print(rec)
+            ans.title = rec[0]
+            ans.discription = rec[1]
+            ans.way_to_image = f"/static/img/hero_file{count}.png"
+            ans.category_tags = rec[3]
+            ans.user_id = db_recepts_session.create_session().query(users_table_recepts.User.id).filter(
+                users_table_recepts.User.name == data).first()[0]
+            with open(f'static/text_files/text_recept_{count}', mode='w') as f:
+                f.write('\n'.join(rec[2].split('\r\n')))
+            ans.content = f'static/text_files/text_recept_{count}'
+
+            db_sess = db_recepts_session.create_session()
+            db_sess.add(ans)
+            db_sess.commit()
+            return redirect(location=f"/autorizated_main_page/{data}")
+    else:
+        return redirect('/login')
 
 
 @app.route('/create_recept/<data>', methods=['POST', 'GET'])
@@ -152,7 +228,7 @@ def create_recept(data):
             db_sess.commit()
             return redirect(location=f"/autorizated_main_page/{data}")
     else:
-        return 'YOU SHELL NOT PASSSS'
+        return redirect('/login')
 
 
 @app.route('/autorizated_main_page/<data>')
@@ -180,7 +256,7 @@ def main_autorized(data):
             return render_template('main_page_autorization.html', title='Главная страница', name=user.name,
                                    email=user.email, acc=f"/account/{name}", cre=f"/create_recept/{name}")
     else:
-        return 'YOU SHELL NOT PASSSS'
+        return redirect('/login')
 
 
 @app.route('/login', methods=['GET', 'POST'])

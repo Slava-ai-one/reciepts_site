@@ -5,13 +5,14 @@
     <h2>Введите название рецепта</h2>
     <input type="text" name=name_recept{{curr_count}} value="{{ ans.title }}"><br>
     <h2>Прикрепите файл с фотографией готового блюда</h2>
-    <input type=file name=file required value="{{ ans.title }}"><br>
+    <input type=file name=file required value="{{ ans.discription }}"><br>
     <h2>Введите описание блюда</h2>
-    <input type="text" name=description_recept{{curr_count}} value="{{ ans.title }}"><br>
+    <input type="text" name=description_recept{{curr_count}} value="{{ ans.discription }}"><br>
     <input type="radio" value="standart" id="standart" name="asd" checked><label for="standart">Рецепт одним
     текстом</label><br>
     <input type="radio" value="steps" name="asd" id="steps"><label for="steps">Пошаговый рецепт с фото</label><br>
-    <div id="standart_recept"><textarea id="recept_text" name=recept{{curr_count}} wrap="hard" onresize="F" d="{{ ans.title }}"></textarea></div>
+    <div id="standart_recept"><textarea id="recept_text" name=recept{{curr_count}} wrap="hard" onresize="F" ></textarea>
+    <textarea id="recept_text_previue" name=recept{{curr_count}} wrap="hard" onresize="F" disabled>{{ ans.content }}</textarea></div>
     <div id="steps_recept">
         <input type="radio" value="1" class="visually_hiden" id="add_button1"><label for="add_button1">Добавить шаг</label>
         <div id="1">
