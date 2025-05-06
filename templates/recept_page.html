@@ -10,4 +10,11 @@
  <div class="big_text"><h5>{{ rec.category_tags }}</h5></div><br><br>
  <div class="big_text"><h2>{{ rec.discription }}</h2></div><br>
     <div style="-webkit-line-clamp: 2; text-overflow: ellipsis;">{{ rec.content }}</div></div>
+{% if achivment == True %}
+<form method="post" id="delete"><input type="text" value="delete" name="delete" hidden="hidden"><button type="submit">Удалить рецепт</button></form>
+<form method="post" id="edit">
+    <input type="text" value="edit" name="edit" hidden="hidden">
+    <button type="submit">Редактировать рецепт</button>
+</form>
+{% endif %}
 {% endblock %}
