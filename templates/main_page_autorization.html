@@ -3,24 +3,31 @@
 {% block data %}
 
 {% block content %}
-<div id="user_field">{{ name }}  {{ email }}<br><a href="/"><button>Выйти</button></a></div>
+<div id="user_field">{{ name }} {{ email }}<br><a href={{acc}}>Аккаунт</a> <a href={{cre}}>Создать рецепт</a><br><br><br><a
+        href="/">
+    <button>Выйти</button>
+</a></div>
 {% endblock %}
-        <div id="search_field"></div>
-        <div id="functional_field"><a href={{acc}}>Аккаунт</a><a href={{cre}}/None>Создать рецепт</a></div>
-        <div id="popular_recepts"><table id="table_recepts"><tr>
-    {% for x in rec %}
-        <th scope="col">
-            <a href="/recept_page/{{ x.id }}52%{{ name }}">
-    <div class="recept_form">
-        <div id="name_recept" class="big_text">{{ x.title }}</div>
-        <br><br>
-        <img src="/static/img/hero_file{{ x.id }}.png" class="hero_image">
-        <br>
-        <div id="body_of_recept" class="big_text">{{ x.discription }}<br><br> {{ x.content }}</div>
-        <br><br>
-        <div id="tags" class="big_text"> {{ x.category_tags }}</div>
-    </div></a></th>
-    {% endfor %}
+<div id="search_field"><form method="post"><textarea onresize="F" id="search" name="search"></textarea> <button type="submit" id="find">🔍︎</button></form></div>
+<div id="functional_field"></div>
+<div id="popular_recepts">
+    <table id="table_recepts">
+        <tr>
+            {% for x in rec %}
+            <th scope="col">
+                <a href="/recept_page/{{ x.id }}52&{{ name }}">
+                    <div class="recept_form">
+                        <div id="name_recept" class="big_text">{{ x.title }}</div>
+                        <br><br>
+                        <img src="/static/img/hero_file{{ x.id }}.png" class="hero_image">
+                        <br>
+                        <div id="body_of_recept" class="big_text">{{ x.discription }}<br><br> {{ x.content }}</div>
+                        <br><br>
+                        <div id="tags" class="big_text"> {{ x.category_tags }}</div>
+                    </div>
+                </a></th>
+            {% endfor %}
         </tr>
-        </table></div>
+    </table>
+</div>
 {% endblock %}

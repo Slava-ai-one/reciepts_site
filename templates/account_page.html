@@ -1,9 +1,11 @@
 {% extends "main_page.html" %}
 {% block data %}
+{% if person == True %}
 <div id="account_user_field"><div>{{ user.name }}</div><div>{{ user.email }}</div><div></div></div>
+{% endif %}
 <div id="base_field">
 {% for x in rec %}
-            <a href="/recept_page/{{ x.id }}52%{{ acc }}">
+            <a href="/recept_page/{{ x.id }}52&{{ acc }}">
     <div class="account_recept_form">
         <div id="name_recept" class="big_text">{{ x.title }}</div>
         <img src="/static/img/hero_file{{ x.id }}.png" class="hero_image">
