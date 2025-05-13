@@ -7,7 +7,7 @@ class Checking_login_im_inspect_you_shell_not_pass():
         self.login_check_52_42 = 1
         self.us_id = id
 
-    def ulogin(self):
+    def unlogin(self):
         self.login_check_52_42 = 0
 
     def check(self):

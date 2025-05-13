@@ -36,6 +36,7 @@ delite = Del()
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
+    authorized.unlogin()
     if request.method == 'GET':
         res = []
         if len(db_recepts_session.create_session().query(recept_table.Recepts.id).all()) != 0:
@@ -112,7 +113,7 @@ def recept_page(data):
                     users_table_recepts.User.name == find).first()
                 return redirect(f"/edit_recept/{bcd.name}/{ans.id}")
         except Exception as err:
-            print(err)
+            return "Что-то пошло не так"
 
 
 @app.route('/account/<data>')
@@ -163,7 +164,7 @@ def edit_recept(data, meta):
                 ans.content = ''.join(b)
             return render_template('edit_page.html', title='Редактирование  рецепта', count=ans.id, ans=ans)
         elif request.method == 'POST':
-            tags = ['soup', 'desert', 'tea', 'garnir']
+            tags = ['soup', 'desert', 'drinks', 'garnir']
             category = None
             for tag in tags:
                 req = request.form.get(f"{tag}")
@@ -207,7 +208,7 @@ def create_recept(data):
         if request.method == 'GET':
             return render_template('create_recept_page.html', title='Создание рецепта', count=count)
         elif request.method == 'POST':
-            tags = ['soup', 'desert', 'tea', 'garnir']
+            tags = ['soup', 'desert', 'drinks', 'garnir']
             category = None
             for tag in tags:
                 req = request.form.get(f"{tag}")
@@ -287,9 +288,10 @@ def main_autorized(data):
 @app.route('/search_result/<data>')
 def search_result(data):
     try:
+        д = data.split("52&")
         res = db_recepts_session.create_session().query(recept_table.Recepts).filter(
-            (recept_table.Recepts.title.like(f'%{data.split("52&")}%')) | (
-                recept_table.Recepts.discription.like(f'%{data}%'))).all()
+            (recept_table.Recepts.title.like(f'%{data.split("52&")[0].lower()}%')) | (
+                recept_table.Recepts.discription.like(f'%{data.split("52&")[0].lower()}%'))).all()
         for ans in res:
             with open(f"{ans.content}", mode='r') as f:
                 b = f.readlines()
@@ -297,12 +299,43 @@ def search_result(data):
         user = db_recepts_session.create_session().query(users_table_recepts.User).filter(
                                        users_table_recepts.User.id == authorized.get_id()).first()
         if authorized.check():
+            if len(res) == 0:
+                return render_template("account_page.html", rec=res, title=data,
+                                       user=user, person=True, acc=user.name, message='Ничего не нашлось')
             return render_template("account_page.html", rec=res, title=data,
                                    user=user, person=True, acc=user.name)
         else:
+            if len(res) == 0:
+                return render_template("account_page.html", rec=res, title=data, message='Ничего не нашлось')
             return render_template("account_page.html", rec=res, title=data)
     except Exception:
-        pass
+        return "Что-то пошло не так"
+
+
+@app.route('/search_category/<data>')
+def search_category(data):
+    try:
+        к = data.split("52&")
+        res = db_recepts_session.create_session().query(recept_table.Recepts).filter(
+            (recept_table.Recepts.category_tags.like(f'%{data.split("52&")[0]}%'))).all()
+        for ans in res:
+            with open(f"{ans.content}", mode='r') as f:
+                b = f.readlines()
+                ans.content = ''.join(b)
+        user = db_recepts_session.create_session().query(users_table_recepts.User).filter(
+                                       users_table_recepts.User.id == authorized.get_id()).first()
+        if authorized.check():
+            if len(res) == 0:
+                return render_template("account_page.html", rec=res, title=data,
+                                       user=user, person=True, acc=user.name, message='Ничего не нашлось')
+            return render_template("account_page.html", rec=res, title=data,
+                                   user=user, person=True, acc=user.name)
+        else:
+            if len(res) == 0:
+                return render_template("account_page.html", rec=res, title=data, message='Ничего не нашлось')
+            return render_template("account_page.html", rec=res, title=data)
+    except Exception:
+        return "Что-то пошло не так"
 
 
 @app.route('/login', methods=['GET', 'POST'])

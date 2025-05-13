@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel='shortcut icon' href='/static/img/icon.jpg' type='image/x-icon' >
+    <link rel='shortcut icon' href='/static/img/icon.jpg' type='image/x-icon'>
     <meta charset="UTF-8">
     <title>{{title}}</title>
     <link rel="stylesheet" type="text/css" href="/static/css/main_style.css">
@@ -12,25 +12,32 @@
 <div id="user_field"><a href="/login">Войти</a> <a href="/registration">Зарегистрироваться</a></div>
 <p>{{ message }}</p>
 {% endblock %}
-<div id="search_field"><form method="post"><textarea onresize="F" id="search" name="search"></textarea> <button type="submit" id="find">🔍︎</button></form> </div>
-<div id="functional_field"></div>
+<div id="search_field">
+    <form method="post"><textarea onresize="F" id="search" name="search"></textarea>
+        <button type="submit" id="find">🔍︎</button>
+    </form>
+</div>
+<div id="functional_field"><a href="/search_category/Суп">Супы</a><br><a href="/search_category/Дессерт">Дессерты</a><br><a
+        href="/search_category/Напитки">Напитки</a><br><a href="/search_category/Гарнир">Гарниры</a></div>
 <div id="popular_recepts">
-    <table id="table_recepts"><tr>
-    {% for x in rec %}
-        <th scope="col">
-            <a href="/recept_page/{{ x.id }}">
-    <div class="recept_form">
-        <div id="name_recept" class="big_text">{{ x.title }}</div>
-        <br><br>
-        <img src="static/img/hero_file{{ x.id }}.png" class="hero_image">
-        <br>
-        <div id="body_of_recept" class="big_text">{{ x.discription }}<br><br> {{ x.content }}</div>
-        <br><br>
-        <div id="tags" class="big_text"> {{ x.category_tags }}</div>
-    </div></a></th>
-    {% endfor %}
+    <table id="table_recepts">
+        <tr>
+            {% for x in rec %}
+            <th scope="col">
+                <a href="/recept_page/{{ x.id }}">
+                    <div class="recept_form">
+                        <div id="name_recept" class="big_text">{{ x.title }}</div>
+                        <br><br>
+                        <img src="static/img/hero_file{{ x.id }}.png" class="hero_image">
+                        <br>
+                        <div id="body_of_recept" class="big_text">{{ x.discription }}<br><br> {{ x.content }}</div>
+                        <br><br>
+                        <div id="tags" class="big_text"> {{ x.category_tags }}</div>
+                    </div>
+                </a></th>
+            {% endfor %}
         </tr>
-        </table>
+    </table>
 </div>
 {% endblock %}
 </body>

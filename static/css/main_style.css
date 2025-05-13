@@ -8,20 +8,16 @@ body {background-color: rgb(255, 194, 28);}
 #login_link {margin-left: 150px; margin-top: -35px}
 #base_field {margin-left: 475px; margin-top: 20px; background-color: rgb(255, 255, 255); width: 900px}
 #data_field {width: 900px}
-#account_user_field {position: fixed; background-color: rgb(255, 255, 255)}
+.account_user_field {position: fixed; background-color: rgb(255, 255, 255)}
 #table_recepts {border-collapse: collapse; border-spacing 0px; border: 0px}
 .th {padding: 0px}
-#standart_recept{display: none}
-#standart:checked ~ #standart_recept{display: inline} ~ #steps_recept{display: none}
-#steps_recept{display: none}
-#recept_global {margin-left: 30%; margin-right: 30%; background-color: rgb(255, 255, 255)}
-#steps:checked ~ #steps_recept{display: inline} ~ #standart_recept{display: none}
 .recept_form {background-color: rgb(255, 194, 28);
     border-width: 10px;
     border: solid;
     width: 493.5px;
     height: 792px;
     }
+#recept_global {margin-left: 30%; margin-right: 30%; background-color: rgb(255, 255, 255)}
 #find {position: fixed;
     width: 57px;
     height: 36px;

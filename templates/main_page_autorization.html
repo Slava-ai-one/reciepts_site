@@ -3,13 +3,20 @@
 {% block data %}
 
 {% block content %}
-<div id="user_field">{{ name }} {{ email }}<br><a href={{acc}}>Аккаунт</a> <a href={{cre}}>Создать рецепт</a><br><br><br><a
+<div id="user_field">{{ name }} {{ email }}<br><a href={{acc}}>Аккаунт</a> <a href={{cre}}>Создать
+    рецепт</a><br><br><br><a
         href="/">
     <button>Выйти</button>
 </a></div>
 {% endblock %}
-<div id="search_field"><form method="post"><textarea onresize="F" id="search" name="search"></textarea> <button type="submit" id="find">🔍︎</button></form></div>
-<div id="functional_field"></div>
+<div id="search_field">
+    <form method="post"><textarea onresize="F" id="search" name="search"></textarea>
+        <button type="submit" id="find">🔍︎</button>
+    </form>
+</div>
+<div id="functional_field"><a href="/search_category/Суп">Супы</a><br><a
+        href="/search_category/Дессерт">Дессерты</a><br><a
+        href="/search_category/Напитки">Напитки</a><br><a href="/search_category/Гарнир">Гарниры</a></div>
 <div id="popular_recepts">
     <table id="table_recepts">
         <tr>

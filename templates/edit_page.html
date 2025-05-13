@@ -8,60 +8,17 @@
     <input type=file name=file required value="{{ ans.discription }}"><br>
     <h2>Введите описание блюда</h2>
     <input type="text" name=description_recept{{curr_count}} value="{{ ans.discription }}"><br>
-    <input type="radio" value="standart" id="standart" name="asd" checked><label for="standart">Рецепт одним
-    текстом</label><br>
-    <input type="radio" value="steps" name="asd" id="steps"><label for="steps">Пошаговый рецепт с фото</label><br>
-    <div id="standart_recept"><textarea id="recept_text" name=recept{{curr_count}} wrap="hard" onresize="F" ></textarea>
-    <textarea id="recept_text_previue" name=recept{{curr_count}} wrap="hard" onresize="F" disabled>{{ ans.content }}</textarea></div>
-    <div id="steps_recept">
-        <input type="radio" value="1" class="visually_hiden" id="add_button1"><label for="add_button1">Добавить шаг</label>
-        <div id="1">
-        hgfghfc
-
-            </div>
-        <div id="2">
-        kljjkh
-        <input type="radio" value="3" class="visually_hiden" id="add_button3"><label for="add_button3">Добавить шаг</label>
-            </div>
-        <div id="3">
-        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]">
-        <input type="radio" value="4" class="visually_hiden" id="add_button4"><label for="add_button4">Добавить шаг</label>
-            </div>
-        <div id="4">
-        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]">
-        <input type="radio" value="5" class="visually_hiden" id="add_button5"><label for="add_button5">Добавить шаг</label>
-            </div>
-        <div id="5">
-        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]">
-        <input type="radio" value="6" class="visually_hiden" id="add_button6"><label for="add_button6">Добавить шаг</label>
-            </div>
-        <div id="6">
-        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]">
-        <input type="radio" value="7" class="visually_hiden" id="add_button7"><label for="add_button7">Добавить шаг</label>
-            </div>
-        <div id="7">
-        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]">
-        <input type="radio" value="8" class="visually_hiden" id="add_button8"><label for="add_button8">Добавить шаг</label>
-            </div>
-        <div id="8">
-        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]">
-        <input type="radio" value="9" class="visually_hiden" id="add_button9"><label for="add_button9">Добавить шаг</label>
-            </div>
-        <div id="9">
-        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]">
-        <input type="radio" value="10" class="visually_hiden" id="add_button10"><label for="add_button10">Добавить шаг</label>
-            </div>
-        <div id="10">
-        <input type="file" accept=".jpg, .png" src="/static/img/step_img[ curr_count ]">
-            </div>
-    </div>
+    <h2>Напишите полный текст рецепта</h2>
+    <div id="standart_recept"><textarea id="recept_text" name=recept{{curr_count}} wrap="hard" onresize="F"></textarea>
+        <textarea id="recept_text_previue" name=recept{{curr_count}} wrap="hard" onresize="F"
+                  disabled>{{ ans.content }}</textarea></div>
     <h2>Напишите категории к которым относится рецепт</h2>
     <lable for="soup">Суп</lable>
     <input type="checkbox" name=soup value="Суп"><br>
     <lable for="desert">Дессерт</lable>
     <input type="checkbox" name=desert value="Дессерт"><br>
-    <lable for="tea">чай</lable>
-    <input type="checkbox" name=tea value="чай"><br>
+    <lable for="drinks">Напитки</lable>
+    <input type="checkbox" name=drinks value="Напитки"><br>
     <lable for="garnir">Гарнир</lable>
     <input type="checkbox" name=garnir value="Гарнир"><br>
     <br>
